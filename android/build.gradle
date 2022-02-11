@@ -44,6 +44,5 @@ android {
 
 dependencies {
     implementation 'com.github.customerglu:CG-SDK-Android:v1.0.3'
- //   implementation 'com.github.HimanshuTrehan:Androidlibrary:1.2.9'
 
 }

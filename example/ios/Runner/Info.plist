@@ -39,6 +39,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CUSTOMERGLU_WRITE_KEY</key>
+	<string>G4VCVVAcLub8hx5SaeqH3pRqLBmDFrwy</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:demo_plugin/demo_plugin.dart';
+import 'package:demo_plugin/banner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,10 +40,9 @@ class _MyAppState extends State<MyApp> {
       var profile = {
         'userId': 'JohnWick'
       };
-      // await DemoPlugin.doRegister(profile);
+       await DemoPlugin.doRegister(profile);
      // await DemoPlugin.enablePrecaching();
        await DemoPlugin.showNudges();
-       platformVersion =  await DemoPlugin.getWebEventData ?? "";
 
     //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
     } on PlatformException {

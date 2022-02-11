@@ -10,7 +10,20 @@ public class SwiftDemoPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+
+  
+    
+       var userData = [String: AnyHashable]()
+        userData["userId"] = "userId"
+       CustomerGlu.getInstance.registerDevice(userdata: userData, loadcampaigns: false) { success, registrationModel in
+            if success {
+               print("Register Successfully \(String(describing: registrationModel))")
+                CustomerGlu.getInstance.openWallet()
+
+            } else {
+                print("error")
+            }
+        }
   }
 
 }
