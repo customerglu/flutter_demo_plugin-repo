@@ -43,6 +43,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.customerglu:CG-SDK-Android:v1.0.3'
+    implementation 'com.github.customerglu:CG-SDK-Android:v1.0.5'
 
 }

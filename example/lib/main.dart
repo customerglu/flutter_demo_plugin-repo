@@ -1,3 +1,4 @@
+import 'package:demo_plugin_example/homeScreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -37,9 +38,11 @@ class _MyAppState extends State<MyApp> {
     // We also handle the message potentially returning null.
     try {
       var profile = {'userId': 'JohnWick'};
+      await DemoPlugin.getInstance();
       await DemoPlugin.doRegister(profile);
       // await DemoPlugin.enablePrecaching();
       await DemoPlugin.configureLoaderColour("#FFH08H");
+
 
       //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
     } on PlatformException {
@@ -54,39 +57,22 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       // _platformVersion = platformVersion;
     });
+
+
+
+
+  }
+  Future<void> openWallet() async {
+    await DemoPlugin.openWallet();
   }
 
   @override
   Widget build(BuildContext context) {
     // listenBroadcast();
 
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Column(
-            children: [
-              Center(
-                child: RaisedButton(
-                  //     disabledColor: Colors.red,
-                  // disabledTextColor: Colors.black,
-                  padding: const EdgeInsets.all(20),
-                  textColor: Colors.white,
-                  color: Colors.green,
-                  onPressed: () {
-                    initPlatformState();
-                  },
-                  child: Text('Enabled Button'),
-                ),
-              ),
-
-              // Text(_platformVersion)
-            ],
-          ),
-        ),
-      ),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(title: '',)
     );
   }
 

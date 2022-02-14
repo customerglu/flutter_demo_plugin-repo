@@ -42,6 +42,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   private Context context;
   String message="";
   EventChannel eventChannel;
+  CustomerGlu customerglu;
   private EventChannel.EventSink myEventSink;
 
   @Override
@@ -59,79 +60,117 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   @RequiresApi(api = Build.VERSION_CODES.M)
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+  //  setInstance();
     switch (call.method) {
-      case "showNudges":
 
-        try {
-          JSONObject jsonObject = new JSONObject("{\n" +
-                  "    \"type\": \"CustomerGlu\",\n" +
-                  "    \"title\": \"Congrats! You are 3 steps away\",\n" +
-                  "    \"body\": \"ok cool\",\n" +
-                  "    \"glu_message_type\":\"in-app\",\n" +
-                  "    \"page_type\":\"middle-default\",\n" +
-                  "    \"image\": \"https://assets.customerglu.com\",\n" +
-                  "    \"nudge_url\": \"https://d3guhyj4wa8abr.cloudfront.net/program/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ZXN0dXNlci0yOSIsImdsdUlkIjoiM2EzNzI2MTQtMDRkZi00MDU0LWIwMmMtMDgwMjkzYTFjYzFjIiwiY2xpZW50IjoiODRhY2YyYWMtYjJlMC00OTI3LTg2NTMtY2JhMmI4MzgxNmMyIiwiZGV2aWNlSWQiOiJkZXZpY2ViIiwiZGV2aWNlVHlwZSI6ImFuZHJvaWQiLCJpYXQiOjE2NDM3MDQxMTcsImV4cCI6MTY3NTI0MDExN30.j-gSaD0QvMJqZVXLwzJYCtvNbws_3hpvDk6lXuqv6F4&campaignId=410e804b-0642-4f6d-88ff-14b2e9570c38\"\n" +
-                  "}");
-          Thread thread = new Thread() {
-            @Override
-            public void run() {
-              CustomerGlu.getInstance().displayCustomerGluNotification(context, jsonObject, R.drawable.ij, 0.5);
-            }
-          };
-          thread.start();
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        result.success(null);
-
+      case "getInstance":
+        setInstance();
         break;
+      case "setDefaultBannerImage":
+        setDefaultImage(call,result);
+        break;
+      case "configureLoaderColour":
+        configureLoaderColour(call,result);
+        break;
+      case "closeWebviewOnDeeplinkEvent":
+        closeWebviewOnDeeplinkEvent(call,result);
+        break;
+      case "disableGluSdk":
+        disableSDK(call,result);
+        break;
+     
       case "doRegister":
         doRegister(call, result);
         break;
+      case "updateProfile":
+        updateProfile(call,result);
+        break;
+      case "sendEventData":
+        sendEventData(call,result);
+        break;
       case "enablePrecaching":
         CustomerGlu.getInstance().enablePreaching(context);
+
         break;
-      case "listenBroadcast":
-     //  listen_broadcast();
-      // result.success(listen_broadcast());
+      case "getReferralId":
+        getReferralId(call,result);
+      break;
+
+      case "openWallet":
+        customerglu.openWallet(context);
         break;
+
+      case "loadAllCampaigns":
+        customerglu.loadAllCampaigns(context);
+        break;
+      case "loadCampaignById":
+        String campaignId = call.argument("campaignId");
+        customerglu.loadCampaignById(context,campaignId);
+        break;
+      case "loadCampaignsByFilter":
+        loadCampaignsByFilter(call,result);
+        break;
+
       default:
         result.notImplemented();
         break;
     }
   }
 
-//  private String listen_broadcast()
-//  {
-//    BroadcastReceiver mMessageReceiver;
-//    mMessageReceiver = new BroadcastReceiver() {
-//      @Override
-//      public void onReceive(Context context, Intent intent) {
-//        try {
-//
-//          if(intent.getAction().equalsIgnoreCase("CUSTOMERGLU_DEEPLINK_EVENT"))
-//          {
-//            String data =  intent.getStringExtra("data");
-//            JSONObject jsonObject = new JSONObject(data);
-//             message = jsonObject.getString("deepLink");
-//
-//             myEventSink.success("message");
-//
-//            // Write your Logic to perform action
-//
-//
-//       //     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-//          }
-//        }
-//        catch (Exception e)
-//        {
-//          System.out.println(e);
-//        }
-//      }
-//    };
-//    context.registerReceiver(mMessageReceiver,new IntentFilter("CUSTOMERGLU_DEEPLINK_EVENT"));
-//    return message;
-//  }
+  private void loadCampaignsByFilter(MethodCall call, Result result) {
+    Map<String, Object> filterData = Utils.dartMapToProfileMap(call.argument("filters"));
+    customerglu.loadCampaignsByFilter(context,filterData);
+
+  }
+
+  private void getReferralId(MethodCall call, Result result) {
+      String id = call.argument("getReferralId");
+      Uri uri = Uri.parse(id);
+    String refeer_id =   customerglu.getReferralId(uri);
+      result.success(refeer_id);
+
+  }
+
+  private void sendEventData(MethodCall call, Result result) {
+    String eventName = call.argument("eventName");
+    Map<String, Object> eventProperties = Utils.dartMapToProfileMap(call.argument("eventData"));
+    customerglu.sendEvent(context,eventName,eventProperties);
+
+  }
+
+  private void updateProfile(MethodCall call, Result result) {
+
+    Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("profile"));
+    customerglu.updateProfile(context,profile);
+    result.success(null);
+  }
+
+  private void disableSDK(MethodCall call, Result result) {
+    Boolean isDisable = call.argument("value");
+    customerglu.disableGluSdk(isDisable);
+
+  }
+
+  private void closeWebviewOnDeeplinkEvent(MethodCall call, Result result) {
+    Boolean value = call.argument("value");
+    customerglu.closeWebviewOnDeeplinkEvent(value);
+  }
+
+  private void configureLoaderColour(MethodCall call, Result result) {
+    String color = call.argument("color");
+    customerglu.configureLoaderColour(context,color);
+  }
+
+  private void setDefaultImage(MethodCall call, Result result) {
+    String url = call.argument("image_url");
+    customerglu.setDefaultBannerImage(context,url);
+  }
+
+  private void setInstance()
+  {
+    customerglu = CustomerGlu.getInstance();
+  }
+
 
   private void doRegister(MethodCall call, Result result) {
     Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("profile"));
@@ -185,4 +224,28 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   }
 }
 
-
+//     case "showNudges":
+//
+//             try {
+//             JSONObject jsonObject = new JSONObject("{\n" +
+//             "    \"type\": \"CustomerGlu\",\n" +
+//             "    \"title\": \"Congrats! You are 3 steps away\",\n" +
+//             "    \"body\": \"ok cool\",\n" +
+//             "    \"glu_message_type\":\"in-app\",\n" +
+//             "    \"page_type\":\"middle-default\",\n" +
+//             "    \"image\": \"https://assets.customerglu.com\",\n" +
+//             "    \"nudge_url\": \"https://d3guhyj4wa8abr.cloudfront.net/program/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ZXN0dXNlci0yOSIsImdsdUlkIjoiM2EzNzI2MTQtMDRkZi00MDU0LWIwMmMtMDgwMjkzYTFjYzFjIiwiY2xpZW50IjoiODRhY2YyYWMtYjJlMC00OTI3LTg2NTMtY2JhMmI4MzgxNmMyIiwiZGV2aWNlSWQiOiJkZXZpY2ViIiwiZGV2aWNlVHlwZSI6ImFuZHJvaWQiLCJpYXQiOjE2NDM3MDQxMTcsImV4cCI6MTY3NTI0MDExN30.j-gSaD0QvMJqZVXLwzJYCtvNbws_3hpvDk6lXuqv6F4&campaignId=410e804b-0642-4f6d-88ff-14b2e9570c38\"\n" +
+//             "}");
+//             Thread thread = new Thread() {
+//@Override
+//public void run() {
+//        CustomerGlu.getInstance().displayCustomerGluNotification(context, jsonObject, R.drawable.ij, 0.5);
+//        }
+//        };
+//        thread.start();
+//        } catch (Exception e) {
+//        e.printStackTrace();
+//        }
+//        result.success(null);
+//
+//        break;

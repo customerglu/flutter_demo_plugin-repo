@@ -53,9 +53,12 @@ class DemoPlugin {
     return await _channel.invokeMethod('updateProfile', {'profile': profile});
   }
 
-  static Future<void> sendEventData(Map<String, dynamic> eventData) async {
-    return await _channel
-        .invokeMethod('sendEventData', {'eventData': eventData});
+  static Future<void> sendEventData(
+      String eventName, Map<String, dynamic> eventproperties) async {
+    return await _channel.invokeMethod('sendEventData', <String, dynamic>{
+      'eventName': eventName,
+      'eventData': eventproperties
+    });
   }
 
 /* Handle Notifications Methods  */
@@ -77,8 +80,8 @@ class DemoPlugin {
     return await _channel.invokeMethod('loadAllCampaigns');
   }
 
-  static Future<void> loadCampaignById() async {
-    return await _channel.invokeMethod('loadCampaignById');
+  static Future<void> loadCampaignById(String campaignId) async {
+    return await _channel.invokeMethod('loadCampaignById', campaignId);
   }
 
   static Future<void> loadCampaignsByFilter(
