@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     var profile = {'userId': 'JohnWick'};
      DemoPlugin.getInstance();
+     DemoPlugin.setDefaultBannerImage("https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
      DemoPlugin.doRegister(profile);
   }
 
@@ -58,8 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/shop.png",
                 "Shop",
                 () => {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ShopScreen()))
+                      DemoPlugin.loadCampaignById("3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => ShopScreen()))
                     }),
             boxIcon(
                 "assets/images/trolley.png",

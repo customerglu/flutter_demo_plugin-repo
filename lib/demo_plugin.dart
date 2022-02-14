@@ -16,12 +16,14 @@ class DemoPlugin {
     return await _channel.invokeMethod('getInstance');
   }
 
-  static Future<void> setDefaultBannerImage() async {
-    return await _channel.invokeMethod('setDefaultBannerImage');
+  static Future<void> setDefaultBannerImage(var image_url) async {
+    print(image_url);
+    return await _channel.invokeMethod('setDefaultBannerImage', image_url);
   }
 
   static Future<void> configureLoaderColour(String color) async {
-    return await _channel.invokeMethod('configureLoaderColour', color);
+    return await _channel.invokeMethod(
+        'configureLoaderColour', color.toString());
   }
 
   static Future<void> closeWebviewOnDeeplinkEvent(bool value) async {
@@ -45,8 +47,10 @@ class DemoPlugin {
   }
 
   /* Api Methods  */
-  static Future<void> doRegister(Map<String, dynamic> profile) async {
-    return await _channel.invokeMethod('doRegister', {'profile': profile});
+  static Future<void> doRegister(
+      Map<String, dynamic> profile, bool loadCampaigns) async {
+    return await _channel.invokeMethod('doRegister',
+        <String, dynamic>{'profile': profile, "loadCampaigns": loadCampaigns});
   }
 
   static Future<void> updateProfile(Map<String, dynamic> profile) async {

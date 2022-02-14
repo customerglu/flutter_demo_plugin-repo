@@ -60,7 +60,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   @RequiresApi(api = Build.VERSION_CODES.M)
   @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-  //  setInstance();
+    setInstance();
     switch (call.method) {
 
       case "getInstance":
@@ -104,7 +104,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
         customerglu.loadAllCampaigns(context);
         break;
       case "loadCampaignById":
-        String campaignId = call.argument("campaignId");
+        String campaignId = (String) call.arguments;
         customerglu.loadCampaignById(context,campaignId);
         break;
       case "loadCampaignsByFilter":
@@ -124,7 +124,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   }
 
   private void getReferralId(MethodCall call, Result result) {
-      String id = call.argument("getReferralId");
+      String id = (String) call.arguments;
       Uri uri = Uri.parse(id);
     String refeer_id =   customerglu.getReferralId(uri);
       result.success(refeer_id);
@@ -146,24 +146,35 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   }
 
   private void disableSDK(MethodCall call, Result result) {
-    Boolean isDisable = call.argument("value");
+    Boolean isDisable = (Boolean) call.arguments;
     customerglu.disableGluSdk(isDisable);
 
   }
 
   private void closeWebviewOnDeeplinkEvent(MethodCall call, Result result) {
-    Boolean value = call.argument("value");
+    Boolean value = (Boolean) call.arguments;
     customerglu.closeWebviewOnDeeplinkEvent(value);
   }
 
   private void configureLoaderColour(MethodCall call, Result result) {
-    String color = call.argument("color");
+
+    String color = (String) call.arguments;
+    System.out.println("================color==============");
+
     customerglu.configureLoaderColour(context,color);
   }
 
   private void setDefaultImage(MethodCall call, Result result) {
-    String url = call.argument("image_url");
-    customerglu.setDefaultBannerImage(context,url);
+    try {
+      String url = String.valueOf(call.arguments);
+      System.out.println("================url==============");
+      System.out.println(url);
+      customerglu.setDefaultBannerImage(context, url);
+    }
+    catch (Exception e)
+    {
+      System.out.println(e);
+    }
   }
 
   private void setInstance()

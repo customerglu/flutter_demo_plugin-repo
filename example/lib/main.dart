@@ -7,7 +7,14 @@ import 'package:demo_plugin/demo_plugin.dart';
 import 'package:demo_plugin/banner.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_){
+    runApp(MyApp());
+  }
+  );
+//  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -26,6 +33,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     onStreamRecieved();
+     DemoPlugin.configureLoaderColour("#0B66EA");
+
   }
 
   static const EventChannel _eventChannel = EventChannel("CustomerGlu");
@@ -39,9 +48,8 @@ class _MyAppState extends State<MyApp> {
     try {
       var profile = {'userId': 'JohnWick'};
       await DemoPlugin.getInstance();
-      await DemoPlugin.doRegister(profile);
+      await DemoPlugin.doRegister(profile,true);
       // await DemoPlugin.enablePrecaching();
-      await DemoPlugin.configureLoaderColour("#FFH08H");
 
 
       //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
