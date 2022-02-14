@@ -21,15 +21,14 @@ class _MyAppState extends State<MyApp> {
   static const broadcast_channel = MethodChannel("broadcast_channel");
   static const event_channel = EventChannel("broadcast_streamer");
 
-
   @override
   void initState() {
     super.initState();
     onStreamRecieved();
   }
-  static const EventChannel _eventChannel =  EventChannel("CustomerGlu");
- late  StreamSubscription _mystream;
 
+  static const EventChannel _eventChannel = EventChannel("CustomerGlu");
+  late StreamSubscription _mystream;
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
@@ -37,14 +36,12 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      var profile = {
-        'userId': 'JohnWick'
-      };
-       await DemoPlugin.doRegister(profile);
-     // await DemoPlugin.enablePrecaching();
-       await DemoPlugin.showNudges();
+      var profile = {'userId': 'JohnWick'};
+      await DemoPlugin.doRegister(profile);
+      // await DemoPlugin.enablePrecaching();
+      await DemoPlugin.configureLoaderColour("#FFH08H");
 
-    //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
+      //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -55,13 +52,13 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-     // _platformVersion = platformVersion;
+      // _platformVersion = platformVersion;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-   // listenBroadcast();
+    // listenBroadcast();
 
     return MaterialApp(
       home: Scaffold(
@@ -94,13 +91,11 @@ class _MyAppState extends State<MyApp> {
   }
 
   void listenBroadcast() {
-    broadcast_channel.setMethodCallHandler((call) async
-    {
-      if (call.method == "broadcast_message")
-        {
-          print("==============+++++++++==========");
-          print(call.arguments);
-        }
+    broadcast_channel.setMethodCallHandler((call) async {
+      if (call.method == "broadcast_message") {
+        print("==============+++++++++==========");
+        print(call.arguments);
+      }
     });
   }
 
