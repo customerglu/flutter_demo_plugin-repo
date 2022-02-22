@@ -10,22 +10,20 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
-
 }
 
-
 class _MyHomePageState extends State<MyHomePage> {
+  var eventproperties;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    var profile = {'userId': 'JohnWick'};
-     DemoPlugin.getInstance();
-     DemoPlugin.setDefaultBannerImage("https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
-     DemoPlugin.doRegister(profile);
+    DemoPlugin.getInstance();
+    DemoPlugin.setDefaultBannerImage(
+        "https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
+    registerUser();
+    // rint(json);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            boxIcon("assets/images/purse.png", "Wallet", () => {DemoPlugin.openWallet()}),
-            boxIcon("assets/images/quiz.png", "Campaigns", () => {DemoPlugin.loadAllCampaigns()}),
+            boxIcon("assets/images/purse.png", "Wallet",
+                () => {DemoPlugin.openWallet()}),
+            boxIcon("assets/images/quiz.png", "Campaigns",
+                () => {DemoPlugin.loadAllCampaigns()}),
           ],
         ),
         const SizedBox(height: 30),
@@ -59,7 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/shop.png",
                 "Shop",
                 () => {
-                      DemoPlugin.loadCampaignById("3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
+                      DemoPlugin.loadCampaignById(
+                          "3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => ShopScreen()))
                     }),
@@ -67,13 +68,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/trolley.png",
                 "Cart",
                 () => {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => CartScreen()))
+                      eventproperties = {"dd": "hh"},
+                      DemoPlugin.sendEventData("eventName", eventproperties)
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => CartScreen()))
                     }),
           ],
         )
       ],
     ));
+  }
+
+  void registerUser() {
+    var profile = {'userId': 'JohnWick2'};
+
+    DemoPlugin.doRegister(profile, true);
   }
 }
 
@@ -98,7 +107,8 @@ Widget boxIcon(image, label, callback) {
                 ),
                 Text(
                   label,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.w500),
                 )
               ],
             )

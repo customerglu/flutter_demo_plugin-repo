@@ -49,7 +49,7 @@ class DemoPlugin {
   /* Api Methods  */
   static Future<void> doRegister(
       Map<String, dynamic> profile, bool loadCampaigns) async {
-    return await _channel.invokeMethod('doRegister',
+    await _channel.invokeMethod('doRegister',
         <String, dynamic>{'profile': profile, "loadCampaigns": loadCampaigns});
   }
 
@@ -66,8 +66,9 @@ class DemoPlugin {
   }
 
 /* Handle Notifications Methods  */
-  static Future<void> displayCustomerGluNotification() async {
-    return await _channel.invokeMethod('displayCustomerGluNotification');
+  static Future<void> displayCustomerGluNotification(String message) async {
+    return await _channel.invokeMethod(
+        'displayCustomerGluNotification', message);
   }
 
   static Future<void> getReferralId(var dynamicLink) async {

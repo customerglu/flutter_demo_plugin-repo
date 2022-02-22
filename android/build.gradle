@@ -44,5 +44,6 @@ android {
 
 dependencies {
     implementation 'com.github.customerglu:CG-SDK-Android:v1.0.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
 }

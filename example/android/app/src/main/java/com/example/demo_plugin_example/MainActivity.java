@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.test.runner.lifecycle.ActivityLifecycleCallback;
 
 import org.json.JSONObject;
 
@@ -21,13 +22,12 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity {
     private MethodChannel methodChannel;
-    private EventChannel eventChannel;
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         methodChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),"broadcast_channel");
-        eventChannel = new EventChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),"broadcast_streamer");
+        EventChannel eventChannel = new EventChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "broadcast_streamer");
         eventChannel.setStreamHandler(new MyStreamHandler(getApplicationContext()));
     }
 
@@ -35,6 +35,7 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // ActivityLifecycleCallback.register(this);
         super.onCreate(savedInstanceState);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -50,15 +51,9 @@ public class MainActivity extends FlutterActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        listen_broadcast();
     }
 
 
-    private void listen_broadcast()
-    {
-
-
-    }
 }
 
    class MyStreamHandler implements EventChannel.StreamHandler {

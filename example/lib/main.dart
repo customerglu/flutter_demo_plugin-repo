@@ -1,4 +1,5 @@
 import 'package:demo_plugin_example/homeScreen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -9,11 +10,9 @@ import 'package:demo_plugin/banner.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
-      .then((_){
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());
-  }
-  );
+  });
 //  runApp(const MyApp());
 }
 
@@ -33,8 +32,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     onStreamRecieved();
-     DemoPlugin.configureLoaderColour("#0B66EA");
-
+    DemoPlugin.configureLoaderColour("#0B66EA");
+    FirebaseMessaging.onMessage.listen((message) {
+      DemoPlugin.displayCustomerGluNotification(message.toString());
+    });
   }
 
   static const EventChannel _eventChannel = EventChannel("CustomerGlu");
@@ -48,9 +49,8 @@ class _MyAppState extends State<MyApp> {
     try {
       var profile = {'userId': 'JohnWick'};
       await DemoPlugin.getInstance();
-      await DemoPlugin.doRegister(profile,true);
+      await DemoPlugin.doRegister(profile, true);
       // await DemoPlugin.enablePrecaching();
-
 
       //   await DemoPlugin.platformVersion ?? 'Unknown platform version';
     } on PlatformException {
@@ -65,11 +65,8 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       // _platformVersion = platformVersion;
     });
-
-
-
-
   }
+
   Future<void> openWallet() async {
     await DemoPlugin.openWallet();
   }
@@ -79,9 +76,10 @@ class _MyAppState extends State<MyApp> {
     // listenBroadcast();
 
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: '',)
-    );
+        debugShowCheckedModeBanner: false,
+        home: MyHomePage(
+          title: '',
+        ));
   }
 
   void listenBroadcast() {

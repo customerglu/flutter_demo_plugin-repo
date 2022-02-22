@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.nfc.cardemulation.HostNfcFService;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import com.customerglu.sdk.CustomerGlu;
 import com.customerglu.sdk.Interface.DataListner;
 import com.customerglu.sdk.Modal.RegisterModal;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +47,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   String message="";
   EventChannel eventChannel;
   CustomerGlu customerglu;
+  RegisterModal my_registerModal;
   private EventChannel.EventSink myEventSink;
 
   @Override
@@ -81,7 +86,8 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
      
       case "doRegister":
         doRegister(call, result);
-        break;
+
+      break;
       case "updateProfile":
         updateProfile(call,result);
         break;
@@ -110,11 +116,25 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
       case "loadCampaignsByFilter":
         loadCampaignsByFilter(call,result);
         break;
-
+      case "displayCustomerGluNotification":
+      displayCustomerGluNotification(call,result);
+        break;
       default:
         result.notImplemented();
         break;
     }
+  }
+  @RequiresApi(api = Build.VERSION_CODES.M)
+  private void displayCustomerGluNotification(MethodCall call, Result result) {
+    String eventName = call.arguments.toString();
+    try {
+      JSONObject jsonObject = new JSONObject(eventName);
+      customerglu.displayCustomerGluNotification(context,jsonObject,R.drawable.ij,0.5);
+
+    } catch (JSONException e) {
+      e.printStackTrace();
+    }
+
   }
 
   private void loadCampaignsByFilter(MethodCall call, Result result) {
@@ -126,8 +146,8 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   private void getReferralId(MethodCall call, Result result) {
       String id = (String) call.arguments;
       Uri uri = Uri.parse(id);
-    String refeer_id =   customerglu.getReferralId(uri);
-      result.success(refeer_id);
+      String refer_id =   customerglu.getReferralId(uri);
+      result.success(refer_id);
 
   }
 
@@ -184,19 +204,36 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
 
 
   private void doRegister(MethodCall call, Result result) {
+    Handler handler = new Handler(Looper.getMainLooper());
     Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("profile"));
-    CustomerGlu.getInstance().registerDevice(context, profile, true, new DataListner() {
+    new Handler(Looper.getMainLooper()).post(new Runnable() {
       @Override
-      public void onSuccess(RegisterModal registerModal) {
-        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-      }
+      public void run() {
+        // Call the desired channel message here.
+        CustomerGlu.getInstance().registerDevice(context, profile, true, new DataListner() {
+          @Override
+          public void onSuccess(RegisterModal registerModal) {
+            Gson gson = new Gson();
+            String json = gson.toJson(registerModal);
+            System.out.println(json);
+          //  result.success(json);
+          }
+          @Override
+          public void onFail(String message) {
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
 
-      @Override
-      public void onFail(String message) {
-        Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+          }
+        });
 
+
+//        result.success((String) json);
+
+
+        //  Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
       }
     });
+
+
       result.success(null);
 
   }

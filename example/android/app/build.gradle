@@ -53,3 +53,7 @@ android {
 flutter {
     source '../..'
 }
+
+dependencies {
+    implementation 'androidx.test:monitor:1.5.0'
+}
