@@ -22,7 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
     DemoPlugin.setDefaultBannerImage(
         "https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
     registerUser();
-
     // rint(json);
   }
 
@@ -87,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (is_registered) {
       print("----------================-------------");
       print("Flutter res - ");
+
     }
   }
 }

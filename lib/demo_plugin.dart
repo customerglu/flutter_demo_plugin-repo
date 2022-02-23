@@ -30,8 +30,8 @@ class DemoPlugin {
     return await _channel.invokeMethod('closeWebviewOnDeeplinkEvent', value);
   }
 
-  static Future<void> disableGluSdk() async {
-    return await _channel.invokeMethod('disableGluSdk');
+  static Future<void> disableGluSdk(bool value) async {
+    return await _channel.invokeMethod('disableGluSdk', value);
   }
 
   static Future<void> isFcmApn(String value) async {
@@ -42,8 +42,14 @@ class DemoPlugin {
     return await _channel.invokeMethod('enablePrecaching');
   }
 
-  static Future<void> configureSafeArea(Map<String, dynamic> values) async {
-    return await _channel.invokeMethod('configureSafeArea', {'values': values});
+  static Future<void> configureSafeArea(int topHeight, int bottomHeight, String topSafeAreaColor, String bottomSafeAreaColor) async {
+    return await _channel.invokeMethod(
+        'configureSafeArea', <String, dynamic>{
+      'topHeight': topHeight,
+      'bottomHeight': bottomHeight,
+      'topSafeAreaColor': topSafeAreaColor,
+      'bottomSafeAreaColor': bottomSafeAreaColor
+    });
   }
 
   /* Api Methods  */
@@ -58,6 +64,11 @@ class DemoPlugin {
     }
 
     return false;
+  }
+
+  static Future<String> getReferralId(var dynamicLink) async {
+    String res =  await _channel.invokeMethod('getReferralId', dynamicLink);
+    return res;
   }
 
   static Future<void> updateProfile(Map<String, dynamic> profile) async {
@@ -78,10 +89,6 @@ class DemoPlugin {
         'displayCustomerGluNotification', message);
   }
 
-  static Future<void> getReferralId(var dynamicLink) async {
-    return await _channel.invokeMethod('getReferralId', dynamicLink);
-  }
-
   /* Load Campaigns Methods  */
 
   static Future<void> openWallet() async {
@@ -100,5 +107,21 @@ class DemoPlugin {
       Map<String, dynamic> filterData) async {
     return await _channel
         .invokeMethod('loadCampaignsByFilter', {'filters': filterData});
+  }
+
+  static Future<void> enableAnalyticsEvent(bool value) async {
+    return await _channel.invokeMethod('enableAnalyticsEvent', value);
+  }
+
+  static Future<void> clearGluData() async {
+    return await _channel.invokeMethod('clearGluData');
+  }
+
+  static Future<void> loadCampaignsByType(String type) async {
+    return await _channel.invokeMethod('loadCampaignsByType', type);
+  }
+
+  static Future<void> loadCampaignByStatus(String status) async {
+    return await _channel.invokeMethod('loadCampaignByStatus', status);
   }
 }
