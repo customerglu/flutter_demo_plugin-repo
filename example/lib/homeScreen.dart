@@ -14,7 +14,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var eventproperties;
-
+  String name = "";
   @override
   void initState() {
     super.initState();
@@ -22,6 +22,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DemoPlugin.setDefaultBannerImage(
         "https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
     registerUser();
+
     // rint(json);
   }
 
@@ -57,10 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             boxIcon(
                 "assets/images/shop.png",
-                "Shop",
+                name,
                 () => {
-                      DemoPlugin.loadCampaignById(
-                          "3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
+                      // DemoPlugin.loadCampaignById(
+                      //     "3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => ShopScreen()))
                     }),
@@ -79,10 +80,14 @@ class _MyHomePageState extends State<MyHomePage> {
     ));
   }
 
-  void registerUser() {
+  registerUser() async {
     var profile = {'userId': 'JohnWick2'};
 
-    DemoPlugin.doRegister(profile, true);
+    bool is_registered = await DemoPlugin.doRegister(profile, true);
+    if (is_registered) {
+      print("----------================-------------");
+      print("Flutter res - ");
+    }
   }
 }
 

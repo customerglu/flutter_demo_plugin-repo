@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.dart.DartExecutor;
@@ -87,7 +88,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
       case "doRegister":
         doRegister(call, result);
 
-      break;
+        break;
       case "updateProfile":
         updateProfile(call,result);
         break;
@@ -129,7 +130,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     String eventName = call.arguments.toString();
     try {
       JSONObject jsonObject = new JSONObject(eventName);
-      customerglu.displayCustomerGluNotification(context,jsonObject,R.drawable.ij,0.5);
+      customerglu.displayCustomerGluNotification(context,jsonObject,R.mipmap.ic_launcher,0.5);
 
     } catch (JSONException e) {
       e.printStackTrace();
@@ -204,8 +205,12 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
 
 
   private void doRegister(MethodCall call, Result result) {
+
+    final CountDownLatch signal = new CountDownLatch(1);
+
     Handler handler = new Handler(Looper.getMainLooper());
     Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("profile"));
+
     new Handler(Looper.getMainLooper()).post(new Runnable() {
       @Override
       public void run() {
@@ -213,17 +218,32 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
         CustomerGlu.getInstance().registerDevice(context, profile, true, new DataListner() {
           @Override
           public void onSuccess(RegisterModal registerModal) {
-            Gson gson = new Gson();
-            String json = gson.toJson(registerModal);
-            System.out.println(json);
-          //  result.success(json);
+            try {
+              Gson gson = new Gson();
+              String json = gson.toJson(registerModal);
+              JSONObject jsonObject = new JSONObject(json);
+              System.out.println("MyJson " + json);
+              System.out.println("Loop starts");
+              String success = jsonObject.getString("success");
+              signal.countDown();
+              result.success(success);
+            }catch (Exception e)
+            {
+              signal.countDown();
+              result.success("false");
+            }
           }
+
           @Override
           public void onFail(String message) {
+            signal.countDown();
+            result.success("false");
+
             Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
 
           }
         });
+
 
 
 //        result.success((String) json);
@@ -234,7 +254,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     });
 
 
-      result.success(null);
+     // result.success(null);
 
   }
 

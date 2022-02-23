@@ -1,7 +1,7 @@
 name: demo_plugin
-description: A new Flutter project.
-version: 0.0.1
-homepage:
+description: A new Flutter Customer library.
+version: 0.0.2
+homepage: https://github.com/customerglu/flutter_demo_plugin-repo
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

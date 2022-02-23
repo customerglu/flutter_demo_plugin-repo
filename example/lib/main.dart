@@ -67,9 +67,9 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> openWallet() async {
-    await DemoPlugin.openWallet();
-  }
+  // Future<void> openWallet() async {
+  //   await DemoPlugin.openWallet();
+  // }
 
   @override
   Widget build(BuildContext context) {
