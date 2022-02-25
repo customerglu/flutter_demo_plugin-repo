@@ -130,7 +130,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     String eventName = call.arguments.toString();
     try {
       JSONObject jsonObject = new JSONObject(eventName);
-      customerglu.displayCustomerGluNotification(context,jsonObject,R.mipmap.ic_launcher,0.5);
+      customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
 
     } catch (JSONException e) {
       e.printStackTrace();

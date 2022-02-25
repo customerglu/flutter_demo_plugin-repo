@@ -59,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/shop.png",
                 name,
                 () => {
-                      // DemoPlugin.loadCampaignById(
-                      //     "3d7d9d7d-da0a-4d69-9c6e-6f9c24b19ba9")
+                      DemoPlugin.loadCampaignById(
+                          "410e804b-0642-4f6d-88ff-14b2e9570c38")
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => ShopScreen()))
                     }),
@@ -86,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
     if (is_registered) {
       print("----------================-------------");
       print("Flutter res - ");
-
     }
   }
 }

@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     onStreamRecieved();
+    listenBroadcast();
     DemoPlugin.configureLoaderColour("#0B66EA");
     FirebaseMessaging.onMessage.listen((message) {
       DemoPlugin.displayCustomerGluNotification(message.toString());

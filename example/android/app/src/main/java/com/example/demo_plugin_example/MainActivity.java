@@ -22,13 +22,16 @@ import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity {
     private MethodChannel methodChannel;
+    BroadcastReceiver mMessageReceiver;
+    Context context;
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         methodChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),"broadcast_channel");
-        EventChannel eventChannel = new EventChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "broadcast_streamer");
-        eventChannel.setStreamHandler(new MyStreamHandler(getApplicationContext()));
+        context = getApplicationContext();
+//        EventChannel eventChannel = new EventChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "broadcast_streamer");
+//        eventChannel.setStreamHandler(new MyStreamHandler(getApplicationContext()));
     }
 
 
@@ -41,7 +44,32 @@ public class MainActivity extends FlutterActivity {
             @Override
             public void run() {
                 // Call the desired channel message here.
-                methodChannel.invokeMethod("broadcast_message","message");
+              //
+                mMessageReceiver = new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        try {
+
+                            if(intent.getAction().equalsIgnoreCase("CUSTOMERGLU_DEEPLINK_EVENT"))
+                            {
+                                String data =  intent.getStringExtra("data");
+                                JSONObject jsonObject = new JSONObject(data);
+                               String message = jsonObject.getString("deepLink");
+
+                                // Write your Logic to perform action
+                                methodChannel.invokeMethod("broadcast_message",message);
+
+
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            System.out.println(e);
+                        }
+                    }
+                };
+                context.registerReceiver(mMessageReceiver,new IntentFilter("CUSTOMERGLU_DEEPLINK_EVENT"));
 
             }
         });
@@ -57,45 +85,20 @@ public class MainActivity extends FlutterActivity {
 }
 
    class MyStreamHandler implements EventChannel.StreamHandler {
-       BroadcastReceiver mMessageReceiver;
-       Context context;
-       String message;
+
+     //  String message;
 
 
-       public MyStreamHandler(Context context)
-    {
-        this.context = context;
-    }
+   //    public MyStreamHandler(Context context)
+//    {
+//        this.context = context;
+//    }
 
 
        @Override
        public void onListen(Object arguments, EventChannel.EventSink events) {
 
-           mMessageReceiver = new BroadcastReceiver() {
-               @Override
-               public void onReceive(Context context, Intent intent) {
-                   try {
 
-                       if(intent.getAction().equalsIgnoreCase("CUSTOMERGLU_DEEPLINK_EVENT"))
-                       {
-                           String data =  intent.getStringExtra("data");
-                           JSONObject jsonObject = new JSONObject(data);
-                           message = jsonObject.getString("deepLink");
-
-                           // Write your Logic to perform action
-                           events.success(message);
-
-
-                           Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                       }
-                   }
-                   catch (Exception e)
-                   {
-                       System.out.println(e);
-                   }
-               }
-           };
-           context.registerReceiver(mMessageReceiver,new IntentFilter("CUSTOMERGLU_DEEPLINK_EVENT"));
 
        }
 
