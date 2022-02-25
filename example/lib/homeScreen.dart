@@ -1,5 +1,6 @@
 import 'package:demo_plugin/demo_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'cartScreen.dart';
 import 'shopScreen.dart';
@@ -23,8 +24,24 @@ class _MyHomePageState extends State<MyHomePage> {
         "https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
     registerUser();
     // rint(json);
-  }
 
+    final channelName = 'wingquest.stablekernel.io/speech';
+    final methodChannel = MethodChannel(channelName);
+    methodChannel.setMethodCallHandler(this._didRecieveTranscript);
+  }
+  Future<void> _didRecieveTranscript(MethodCall call) async {
+    // type inference will work here avoiding an explicit cast
+    final String utterance = call.arguments;
+    switch(call.method) {
+      case "CUSTOMERGLU_DEEPLINK_EVENT":
+        print("khushbu bhawsar CUSTOMERGLU_DEEPLINK_EVENT");
+        break;
+      case "CUSTOMERGLU_ANALYTICS_EVENT":
+        print("khushbu bhawsar CUSTOMERGLU_ANALYTICS_EVENT");
+        break;
+    // processUtterance(utterance);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
