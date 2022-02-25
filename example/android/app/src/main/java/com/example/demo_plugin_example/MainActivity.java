@@ -28,7 +28,7 @@ public class MainActivity extends FlutterActivity {
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
-        methodChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),"broadcast_channel");
+        methodChannel = new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(),"CUSTOMERGLU_EVENTS");
         context = getApplicationContext();
 //        EventChannel eventChannel = new EventChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), "broadcast_streamer");
 //        eventChannel.setStreamHandler(new MyStreamHandler(getApplicationContext()));
@@ -57,11 +57,21 @@ public class MainActivity extends FlutterActivity {
                                String message = jsonObject.getString("deepLink");
 
                                 // Write your Logic to perform action
-                                methodChannel.invokeMethod("broadcast_message",message);
+                                methodChannel.invokeMethod("CUSTOMERGLU_DEEPLINK_EVENT","");
 
 
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                             }
+                            if(intent.getAction().equalsIgnoreCase("CUSTOMERGLU_ANALYTICS_EVENT"))
+                              {
+
+                                     String data =  intent.getStringExtra("data");
+                                    JSONObject jsonObject = new JSONObject(data);
+                                    Toast.makeText(context, jsonObject.toString(), Toast.LENGTH_SHORT).show();
+
+                                 methodChannel.invokeMethod("CUSTOMERGLU_ANALYTICS_EVENT",jsonObject.toString());
+
+                               }
                         }
                         catch (Exception e)
                         {
@@ -70,6 +80,7 @@ public class MainActivity extends FlutterActivity {
                     }
                 };
                 context.registerReceiver(mMessageReceiver,new IntentFilter("CUSTOMERGLU_DEEPLINK_EVENT"));
+                context.registerReceiver(mMessageReceiver,new IntentFilter("CUSTOMERGLU_ANALYTICS_EVENT"));
 
             }
         });

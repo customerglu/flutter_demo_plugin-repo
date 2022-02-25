@@ -1,7 +1,7 @@
 PODS:
-  - CustomerGlu (1.0.5)
+  - CustomerGlu (1.0.6)
   - demo_plugin (0.0.1):
-    - CustomerGlu (= 1.0.5)
+    - CustomerGlu (= 1.0.6)
     - Flutter
   - Firebase/CoreOnly (8.11.0):
     - FirebaseCore (= 8.11.0)
@@ -97,8 +97,8 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  CustomerGlu: fbd73796bf7f6f88d88847c0818bda8f1b1c6eb8
-  demo_plugin: 8eabc4f2acc9fa6a80a1cba2e64b8d1e9b02d992
+  CustomerGlu: c950f9d43d398eba29dd90534bdff232f0283828
+  demo_plugin: 8e58bc99ae93db629725f3fd54ba76f3f73ad30e
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
   firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
   firebase_messaging: c6608162e71bcfd78198a81eac9c2fa27fed3aae

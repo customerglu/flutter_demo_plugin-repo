@@ -5,7 +5,7 @@ import Flutter
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
     
-    let channelName = "wingquest.stablekernel.io/speech"
+    let channelName = "CUSTOMERGLU_EVENTS"
     var methodChannel = FlutterMethodChannel()
     
    // let channelName = "wingquest.stablekernel.io/speech"
@@ -37,7 +37,7 @@ import Flutter
           if let userInfo = notification.userInfo as? [String: Any]
           {
              print(userInfo)
-             methodChannel.invokeMethod("CUSTOMERGLU_ANALYTICS_EVENT", arguments: "")
+             methodChannel.invokeMethod("CUSTOMERGLU_ANALYTICS_EVENT", arguments: userInfo)
         }
     }
     
@@ -46,7 +46,7 @@ import Flutter
         if let userInfo = notification.userInfo as? [String: Any]
         {
            print(userInfo)
-            methodChannel.invokeMethod("CUSTOMERGLU_DEEPLINK_EVENT", arguments: "")
+            methodChannel.invokeMethod("CUSTOMERGLU_DEEPLINK_EVENT", arguments: userInfo)
       }
         }
 }

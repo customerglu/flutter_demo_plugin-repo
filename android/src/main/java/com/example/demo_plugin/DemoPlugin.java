@@ -84,7 +84,9 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
       case "disableGluSdk":
         disableSDK(call,result);
         break;
-     
+        case "enableAnalyticsEvent":
+        enableAnalyticsEvent(call,result);
+        break;
       case "doRegister":
         doRegister(call, result);
 
@@ -105,6 +107,9 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
 
       case "openWallet":
         customerglu.openWallet(context);
+        break;
+        case "clearGluData":
+        customerGlu.clearGluData(context);
         break;
 
       case "loadAllCampaigns":
@@ -130,7 +135,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     String eventName = call.arguments.toString();
     try {
       JSONObject jsonObject = new JSONObject(eventName);
-      customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
+  //   customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
 
     } catch (JSONException e) {
       e.printStackTrace();
@@ -171,7 +176,11 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     customerglu.disableGluSdk(isDisable);
 
   }
+  private void enableAnalyticsEvent(MethodCall call, Result result) {
+    Boolean isDisable = (Boolean) call.arguments;
+    customerglu.enableAnalyticsEvent(isDisable);
 
+  }
   private void closeWebviewOnDeeplinkEvent(MethodCall call, Result result) {
     Boolean value = (Boolean) call.arguments;
     customerglu.closeWebviewOnDeeplinkEvent(value);
