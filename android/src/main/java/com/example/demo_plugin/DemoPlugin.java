@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
+
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.embedding.engine.dart.DartExecutor;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -109,7 +110,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
         customerglu.openWallet(context);
         break;
         case "clearGluData":
-        customerGlu.clearGluData(context);
+        customerglu.clearGluData(context);
         break;
 
       case "loadAllCampaigns":
@@ -132,12 +133,14 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   }
   @RequiresApi(api = Build.VERSION_CODES.M)
   private void displayCustomerGluNotification(MethodCall call, Result result) {
-    String eventName = call.arguments.toString();
+    Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("message"));
+   // String eventName = call.arguments.toString();
     try {
-      JSONObject jsonObject = new JSONObject(eventName);
-  //   customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
+      System.out.println("niotification:" + profile);
+      JSONObject jsonObject = new JSONObject(profile);
+     customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
 
-    } catch (JSONException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
 

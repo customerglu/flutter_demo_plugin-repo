@@ -1,4 +1,5 @@
 import 'package:demo_plugin_example/homeScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -7,14 +8,39 @@ import 'package:flutter/services.dart';
 import 'package:demo_plugin/demo_plugin.dart';
 import 'package:demo_plugin/banner.dart';
 
-void main() {
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print("handler");
+  await Firebase.initializeApp();
+  print(message.data.toString());
+  // initializelocalNotification();
+}
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+  //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+  //   //  runApp(MyApp());
+  //   // selectedNotificationPayload =
+  //   //     notificationAppLaunchDetails!.payload.toString();
+  //   selectedNotificationPayload = await LocalStore().getAppSharePopUp();
+  //   myurl = selectedNotificationPayload;
+  //   print(myurl);
+
+  //    SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+  //   runApp(MyApp());
+  // });
+  // } else {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(MyApp());
   });
-//  runApp(const MyApp());
 }
+//}
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -24,11 +50,44 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var fcmtoken = "";
+
   static const broadcast_channel = MethodChannel("CUSTOMERGLU_EVENTS");
 
   @override
   void initState() {
     super.initState();
+    Firebase.initializeApp();
+
+    FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      if (message != null) {
+        if (message.data["type"] != null &&
+            message.data["type"] == "CustomerGlu") print("initial");
+      }
+    });
+
+    var messaging = FirebaseMessaging.instance;
+
+    messaging.getToken().then((value) {
+      print("fcm token" + value.toString());
+      fcmtoken = value!;
+      //Firebase Token
+    });
+
+    //  initializelocalNotification();
+
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message.data);
+      DemoPlugin.displayCustomerGluNotification(message.data);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print("gjhgj");
+      // Navigator.of(Constant.navigatorKey.currentState!.overlay!.context).push(
+      //     MaterialPageRoute(
+      //         builder: (context) => MyWebView(url: message.data["nudge_url"])));
+    });
+
     broadcast_channel.setMethodCallHandler((call) async {
       switch (call.method) {
         case "CUSTOMERGLU_DEEPLINK_EVENT":
@@ -44,9 +103,6 @@ class _MyAppState extends State<MyApp> {
     });
     DemoPlugin.enableAnalyticsEvent(true);
     DemoPlugin.configureLoaderColour("#0B66EA");
-    FirebaseMessaging.onMessage.listen((message) {
-      DemoPlugin.displayCustomerGluNotification(message.toString());
-    });
   }
 
   static const EventChannel _eventChannel = EventChannel("CustomerGlu");

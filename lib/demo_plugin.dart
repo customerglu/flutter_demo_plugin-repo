@@ -42,9 +42,9 @@ class DemoPlugin {
     return await _channel.invokeMethod('enablePrecaching');
   }
 
-  static Future<void> configureSafeArea(int topHeight, int bottomHeight, String topSafeAreaColor, String bottomSafeAreaColor) async {
-    return await _channel.invokeMethod(
-        'configureSafeArea', <String, dynamic>{
+  static Future<void> configureSafeArea(int topHeight, int bottomHeight,
+      String topSafeAreaColor, String bottomSafeAreaColor) async {
+    return await _channel.invokeMethod('configureSafeArea', <String, dynamic>{
       'topHeight': topHeight,
       'bottomHeight': bottomHeight,
       'topSafeAreaColor': topSafeAreaColor,
@@ -67,7 +67,7 @@ class DemoPlugin {
   }
 
   static Future<String> getReferralId(var dynamicLink) async {
-    String res =  await _channel.invokeMethod('getReferralId', dynamicLink);
+    String res = await _channel.invokeMethod('getReferralId', dynamicLink);
     return res;
   }
 
@@ -84,9 +84,11 @@ class DemoPlugin {
   }
 
 /* Handle Notifications Methods  */
-  static Future<void> displayCustomerGluNotification(String message) async {
-    return await _channel.invokeMethod(
-        'displayCustomerGluNotification', message);
+  static Future<void> displayCustomerGluNotification(
+      Map<String, dynamic> message) async {
+    print("dart msg :" + message.toString());
+    return await _channel.invokeMethod('displayCustomerGluNotification',
+        <String, dynamic>{"message": message});
   }
 
   /* Load Campaigns Methods  */
