@@ -10,6 +10,10 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ApplicationInfo;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -135,12 +139,14 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   private void displayCustomerGluNotification(MethodCall call, Result result) {
     Map<String, Object> profile = Utils.dartMapToProfileMap(call.argument("message"));
    // String eventName = call.arguments.toString();
+
     try {
       System.out.println("niotification:" + profile);
       JSONObject jsonObject = new JSONObject(profile);
+      int icon_id = getMyAppIcon(context);
          Thread t = new Thread() {
             public void run() {
-              customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
+              customerglu.displayCustomerGluNotification(context,jsonObject,icon_id,0.5);
             }
         };
         t.start();
@@ -149,6 +155,20 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
       e.printStackTrace();
     }
 
+  }
+  public int getMyAppIcon(Context context)
+  {
+      final PackageManager packageManager = context.getPackageManager();
+      final ApplicationInfo applicationInfo;
+      int appIconResId=0;
+      try {
+          applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            appIconResId=applicationInfo.icon;
+
+      } catch (PackageManager.NameNotFoundException e) {
+          e.printStackTrace();
+      }
+      return appIconResId;
   }
 
   private void loadCampaignsByFilter(MethodCall call, Result result) {
