@@ -1,3 +1,4 @@
+import 'package:demo_plugin_example/LocalStore.dart';
 import 'package:demo_plugin_example/homeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,7 +7,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:demo_plugin/demo_plugin.dart';
-import 'package:demo_plugin/banner.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
   print("handler");
@@ -71,6 +71,7 @@ class _MyAppState extends State<MyApp> {
     messaging.getToken().then((value) {
       print("fcm token" + value.toString());
       fcmtoken = value!;
+      LocalStore().setAppSharePopUp(fcmtoken);
       //Firebase Token
     });
 
@@ -148,6 +149,4 @@ class _MyAppState extends State<MyApp> {
           title: '',
         ));
   }
-
-  void listenBroadcast() {}
 }

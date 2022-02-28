@@ -55,7 +55,7 @@ class DemoPlugin {
   /* Api Methods  */
   static Future<bool> doRegister(
       Map<String, dynamic> profile, bool loadCampaigns) async {
-    print("res---------------");
+    print("res--------------- " + profile.toString());
     String res = await _channel.invokeMethod('doRegister',
         <String, dynamic>{'profile': profile, "loadCampaigns": loadCampaigns});
     print("res1 " + res);
