@@ -138,7 +138,12 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     try {
       System.out.println("niotification:" + profile);
       JSONObject jsonObject = new JSONObject(profile);
-     customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
+         Thread t = new Thread() {
+            public void run() {
+              customerglu.displayCustomerGluNotification(context,jsonObject,0,0.5);
+            }
+        };
+        t.start();
 
     } catch (Exception e) {
       e.printStackTrace();
