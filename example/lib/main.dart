@@ -9,10 +9,9 @@ import 'package:flutter/services.dart';
 import 'package:demo_plugin/demo_plugin.dart';
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print("handler");
+  print("backgroundHandler(RemoteMessage message)");
   await Firebase.initializeApp();
-  print(message.data.toString());
-  // initializelocalNotification();
+
 }
 
 Future<void> main() async {
@@ -60,6 +59,7 @@ class _MyAppState extends State<MyApp> {
     Firebase.initializeApp();
 
     FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      print("FirebaseMessaging.instance.getInitialMessage().then((message)");
       if (message != null) {
         if (message.data["type"] != null &&
             message.data["type"] == "CustomerGlu") print("initial");
@@ -71,22 +71,25 @@ class _MyAppState extends State<MyApp> {
     messaging.getToken().then((value) {
       print("fcm token" + value.toString());
       fcmtoken = value!;
+      DemoPlugin.setApnFcmToken("", fcmtoken);
       LocalStore().setAppSharePopUp(fcmtoken);
+
+      var profile = {'': ''};
+
+      DemoPlugin.updateProfile(profile);
       //Firebase Token
     });
 
     //  initializelocalNotification();
 
     FirebaseMessaging.onMessage.listen((message) {
-      print(message.data);
+      print("FirebaseMessaging.onMessage.listen");
       DemoPlugin.displayCustomerGluNotification(message.data);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print("gjhgj");
-      // Navigator.of(Constant.navigatorKey.currentState!.overlay!.context).push(
-      //     MaterialPageRoute(
-      //         builder: (context) => MyWebView(url: message.data["nudge_url"])));
+      print("FirebaseMessaging.onMessageOpenedApp.listen");
+      DemoPlugin.displayBackgroundNotification(message.data);
     });
 
     broadcast_channel.setMethodCallHandler((call) async {
@@ -115,9 +118,9 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      var profile = {'userId': 'JohnWick'};
-      await DemoPlugin.getInstance();
-      await DemoPlugin.doRegister(profile, true);
+      // var profile = {'userId': 'JohnWick'};
+      // await DemoPlugin.getInstance();
+      // await DemoPlugin.doRegister(profile, true);
       // await DemoPlugin.enablePrecaching();
 
       //   await DemoPlugin.platformVersion ?? 'Unknown platform version';

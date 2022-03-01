@@ -52,6 +52,13 @@ class DemoPlugin {
     });
   }
 
+  static Future<void> setApnFcmToken(String apntoken, String fcmtoken) async {
+    return await _channel.invokeMethod('setApnFcmToken', <String, dynamic>{
+      'apntoken': apntoken,
+      'fcmtoken': fcmtoken
+    });
+  }
+
   /* Api Methods  */
   static Future<bool> doRegister(
       Map<String, dynamic> profile, bool loadCampaigns) async {
@@ -86,8 +93,13 @@ class DemoPlugin {
 /* Handle Notifications Methods  */
   static Future<void> displayCustomerGluNotification(
       Map<String, dynamic> message) async {
-    print("dart msg :" + message.toString());
     return await _channel.invokeMethod('displayCustomerGluNotification',
+        <String, dynamic>{"message": message});
+  }
+
+    static Future<void> displayBackgroundNotification(
+      Map<String, dynamic> message) async {
+    return await _channel.invokeMethod('displayBackgroundNotification',
         <String, dynamic>{"message": message});
   }
 

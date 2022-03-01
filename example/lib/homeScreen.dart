@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 () => {
                       eventproperties = {"dd": "hh"},
                       DemoPlugin.sendEventData(
-                          "completePurchase1", eventproperties)
+                          "completePurchase", eventproperties)
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => CartScreen()))
                     }),
@@ -82,8 +82,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   registerUser() async {
     String fcm = await LocalStore().getAppSharePopUp();
-    var profile = {'userId': 'JohnWick200', 'firebaseToken': fcm};
-
+    var profile = {'userId': 'JohnWick2005', 'firebaseToken': fcm};
+    DemoPlugin.isFcmApn("fcm");
+    DemoPlugin.setApnFcmToken("", fcm);
     bool is_registered = await DemoPlugin.doRegister(profile, true);
     if (is_registered) {
       print("----------================-------------");

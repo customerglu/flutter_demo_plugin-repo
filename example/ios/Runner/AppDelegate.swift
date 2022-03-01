@@ -52,6 +52,13 @@ import CustomerGlu
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
+    override func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // Change this to your preferred presentation option
+        CustomerGlu.getInstance.cgUserNotificationCenter(center, willPresent: notification, withCompletionHandler: completionHandler)
+    }
+    
     @objc private func catchAnalyticsNotification(notification: NSNotification) {
           if let userInfo = notification.userInfo as? [String: Any]
           {

@@ -12,6 +12,7 @@ public class SwiftDemoPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         
         if(call.method == "getInstance"){
+            
         } else if(call.method == "setDefaultBannerImage"){
             CustomerGlu.getInstance.setDefaultBannerImage(bannerUrl: call.arguments as! String)
         } else if(call.method == "configureLoaderColour"){
@@ -23,7 +24,17 @@ public class SwiftDemoPlugin: NSObject, FlutterPlugin {
             CustomerGlu.getInstance.disableGluSdk(disable: call.arguments as! Bool)
         } else if(call.method == "isFcmApn"){
             CustomerGlu.getInstance.isFcmApn(fcmApn: call.arguments as! String)
-        } else if(call.method == "enablePrecaching"){
+        }else if(call.method == "setApnFcmToken"){
+           
+            let arguments = call.arguments as! Dictionary<String, Any>
+            let apntoken = arguments["apntoken"] as? String
+            let fcmtoken = arguments["fcmtoken"] as? String
+            
+            CustomerGlu.getInstance.fcmToken = fcmtoken ?? ""
+            CustomerGlu.getInstance.apnToken = apntoken ?? ""
+            
+       }else if(call.method == "enablePrecaching"){
+        
         } else if(call.method == "configureSafeArea"){
             let arguments = call.arguments as! Dictionary<String, Any>
             let topColor = colorWithHexString(hexString: arguments["topSafeAreaColor"] as! String)
@@ -56,14 +67,19 @@ public class SwiftDemoPlugin: NSObject, FlutterPlugin {
             let eventData = arguments["eventData"] as! Dictionary<String, Any>
             CustomerGlu.getInstance.sendEventData(eventName: arguments["eventName"] as! String, eventProperties: eventData)
         } else if(call.method == "displayCustomerGluNotification"){
-            
+            let arguments = call.arguments as! Dictionary<String, Any>
+            let message = arguments["message"] as! Dictionary<String, AnyHashable>
+            CustomerGlu.getInstance.cgapplication(UIApplication.shared, didReceiveRemoteNotification: message, backgroundAlpha: 0.5, fetchCompletionHandler: {_ in })
+        }else if(call.method == "displayBackgroundNotification"){
+            let arguments = call.arguments as! Dictionary<String, Any>
+            let message = arguments["message"] as! Dictionary<String, AnyHashable>
+            CustomerGlu.getInstance.displayBackgroundNotification(remoteMessage: message as? [String: AnyHashable] ?? ["glu_message_type": "glu"])
         } else if(call.method == "getReferralId"){
             let url = URL(string: call.arguments as! String)
             if url == nil {
                 return
             }
             let referId = CustomerGlu.getInstance.getReferralId(deepLink: url!)
-            print(referId)
             result(referId)
         } else if(call.method == "openWallet"){
             CustomerGlu.getInstance.openWallet()

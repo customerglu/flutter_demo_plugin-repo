@@ -21,9 +21,13 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CUSTOMERGLU_WRITE_KEY</key>
-	<string>G4VCVVAcLub8hx5SaeqH3pRqLBmDFrwy</string>
+	<string>xgwD32VLRTQqG9PjzfpEQtDMUQBsud7R</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
