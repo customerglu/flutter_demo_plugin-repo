@@ -6,7 +6,7 @@
         android:label="demo_plugin_example"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="CUSTOMERGLU_WRITE_KEY"
-           android:value="G4VCVVAcLub8hx5SaeqH3pRqLBmDFrwy" />
+           android:value="xgwD32VLRTQqG9PjzfpEQtDMUQBsud7R" />
 
         <activity
             android:name=".MainActivity"

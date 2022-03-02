@@ -38,7 +38,22 @@ class _MyHomePageState extends State<MyHomePage> {
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(color: Colors.black),
             ),
-            Image.asset("assets/images/customerglu.jpg")
+            Image.asset("assets/images/customerglu.jpg"),
+            Positioned(
+              top: 20.0,
+              right: 0.0,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: IconButton(
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      DemoPlugin.clearGluData();
+                    }),
+              ),
+            )
           ],
         ),
         const SizedBox(height: 30),
@@ -82,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   registerUser() async {
     String fcm = await LocalStore().getAppSharePopUp();
-    var profile = {'userId': 'JohnWick2005', 'firebaseToken': fcm};
+    var profile = {'userId': 'JohnWick2080', 'firebaseToken': fcm};
     DemoPlugin.isFcmApn("fcm");
     DemoPlugin.setApnFcmToken("", fcm);
     bool is_registered = await DemoPlugin.doRegister(profile, true);

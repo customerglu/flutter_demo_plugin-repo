@@ -1,4 +1,5 @@
 import 'package:demo_plugin_example/LocalStore.dart';
+import 'package:demo_plugin_example/SplashScreen.dart';
 import 'package:demo_plugin_example/homeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -11,7 +12,6 @@ import 'package:demo_plugin/demo_plugin.dart';
 Future<void> backgroundHandler(RemoteMessage message) async {
   print("backgroundHandler(RemoteMessage message)");
   await Firebase.initializeApp();
-
 }
 
 Future<void> main() async {
@@ -74,9 +74,9 @@ class _MyAppState extends State<MyApp> {
       DemoPlugin.setApnFcmToken("", fcmtoken);
       LocalStore().setAppSharePopUp(fcmtoken);
 
-      var profile = {'': ''};
+      // var profile = {'': ''};
 
-      DemoPlugin.updateProfile(profile);
+      // DemoPlugin.updateProfile(profile);
       //Firebase Token
     });
 
@@ -147,9 +147,6 @@ class _MyAppState extends State<MyApp> {
     // listenBroadcast();
 
     return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MyHomePage(
-          title: '',
-        ));
+        debugShowCheckedModeBanner: false, home: SplashScreen());
   }
 }

@@ -43,7 +43,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 
 /** DemoPlugin */
-public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChannel.StreamHandler {
+public class DemoPlugin implements FlutterPlugin, MethodCallHandler{
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -54,7 +54,6 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
   EventChannel eventChannel;
   CustomerGlu customerglu;
   RegisterModal my_registerModal;
-  private EventChannel.EventSink myEventSink;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -64,7 +63,6 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
    // listen_broadcast();
 
     eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(),"CustomerGlu");
-    eventChannel.setStreamHandler(this);
   }
 
 
@@ -114,6 +112,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
         customerglu.openWallet(context);
         break;
         case "clearGluData":
+        System.out.println("Data cleared");
         customerglu.clearGluData(context);
         break;
 
@@ -291,66 +290,12 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler, EventChanne
     });
 
 
-     // result.success(null);
-
+  
   }
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     channel.setMethodCallHandler(null);
   }
-
-//  @Override
-//  public void success(Object event) {
-//
-//  }
-//
-//  @Override
-//  public void error(String errorCode, String errorMessage, Object errorDetails) {
-//
-//  }
-//
-//  @Override
-//  public void endOfStream() {
-//
-//  }
-
-  @Override
-  public void onListen(Object o,EventChannel.EventSink eventSink)
-  {
-
-   // myEventSink = eventSink;
-    System.out.println("--------------listen---------------");
-  }
-
-  @Override
-  public void onCancel(Object arguments) {
-  myEventSink = null;
-  }
 }
 
-//     case "showNudges":
-//
-//             try {
-//             JSONObject jsonObject = new JSONObject("{\n" +
-//             "    \"type\": \"CustomerGlu\",\n" +
-//             "    \"title\": \"Congrats! You are 3 steps away\",\n" +
-//             "    \"body\": \"ok cool\",\n" +
-//             "    \"glu_message_type\":\"in-app\",\n" +
-//             "    \"page_type\":\"middle-default\",\n" +
-//             "    \"image\": \"https://assets.customerglu.com\",\n" +
-//             "    \"nudge_url\": \"https://d3guhyj4wa8abr.cloudfront.net/program/?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ZXN0dXNlci0yOSIsImdsdUlkIjoiM2EzNzI2MTQtMDRkZi00MDU0LWIwMmMtMDgwMjkzYTFjYzFjIiwiY2xpZW50IjoiODRhY2YyYWMtYjJlMC00OTI3LTg2NTMtY2JhMmI4MzgxNmMyIiwiZGV2aWNlSWQiOiJkZXZpY2ViIiwiZGV2aWNlVHlwZSI6ImFuZHJvaWQiLCJpYXQiOjE2NDM3MDQxMTcsImV4cCI6MTY3NTI0MDExN30.j-gSaD0QvMJqZVXLwzJYCtvNbws_3hpvDk6lXuqv6F4&campaignId=410e804b-0642-4f6d-88ff-14b2e9570c38\"\n" +
-//             "}");
-//             Thread thread = new Thread() {
-//@Override
-//public void run() {
-//        CustomerGlu.getInstance().displayCustomerGluNotification(context, jsonObject, R.drawable.ij, 0.5);
-//        }
-//        };
-//        thread.start();
-//        } catch (Exception e) {
-//        e.printStackTrace();
-//        }
-//        result.success(null);
-//
-//        break;
