@@ -61,7 +61,7 @@ class _MyHomePageState extends State<TestScreen> {
               boxIcon(
                   "LoadCampaign Filter",
                   () => {
-                        filter = {"status": "pristine"},
+                        filter = {"type": "giftbox"},
                         DemoPlugin.loadCampaignsByFilter(filter)
                       }),
             ],
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<TestScreen> {
                 "Campaign By Id",
                 () => {
                       DemoPlugin.loadCampaignById(
-                          "410e804b-0642-4f6d-88ff-14b2e9570c38")
+                          "0c114806-aeca-4e42-a475-10759b8a303e")
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => ShopScreen()))
                     }),
@@ -126,6 +126,17 @@ class _MyHomePageState extends State<TestScreen> {
               boxIcon("updateProfile", () => {updateProfile()}),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              boxIcon(
+                  "Safe Area",
+                  () => {
+                        DemoPlugin.configureSafeArea(
+                            50, 30, "#FF0Ebc", "#FF0ENJ")
+                      }),
+            ],
+          ),
         ],
       ),
     ));
@@ -159,7 +170,7 @@ Widget boxIcon(label, callback) {
       elevation: 3,
       child: Container(
         height: 50,
-        width: 200,
+        width: 180,
         child: Stack(
           alignment: Alignment.center,
           children: [

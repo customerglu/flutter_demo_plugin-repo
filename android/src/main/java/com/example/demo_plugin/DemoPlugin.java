@@ -130,7 +130,9 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler{
       displayCustomerGluNotification(call,result);
         break;
       default:
-        result.notImplemented();
+
+        System.out.println(call.method+ " Not Implemented ");
+        
         break;
     }
   }

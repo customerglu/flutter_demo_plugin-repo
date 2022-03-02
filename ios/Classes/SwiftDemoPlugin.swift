@@ -100,6 +100,9 @@ public class SwiftDemoPlugin: NSObject, FlutterPlugin {
         } else if(call.method == "loadCampaignByStatus") {
             CustomerGlu.getInstance.loadCampaignByStatus(status: call.arguments as! String)
         }
+        else{
+            print(call.method+" Not Implemented")
+        }
     }
     
     private func colorWithHexString(hexString: String) -> UIColor {
