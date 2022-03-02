@@ -1,5 +1,6 @@
 import 'package:demo_plugin/demo_plugin.dart';
 import 'package:demo_plugin_example/LocalStore.dart';
+import 'package:demo_plugin_example/testScreen.dart';
 import 'package:flutter/material.dart';
 
 import 'cartScreen.dart';
@@ -74,10 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 "assets/images/onlineshopping.png",
                 "Shop",
                 () => {
-                      DemoPlugin.loadCampaignById(
-                          "410e804b-0642-4f6d-88ff-14b2e9570c38")
-                      // Navigator.of(context).push(
-                      //     MaterialPageRoute(builder: (context) => ShopScreen()))
+                      // DemoPlugin.loadCampaignById(
+                      //     "410e804b-0642-4f6d-88ff-14b2e9570c38")
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => TestScreen()))
                     }),
             boxIcon(
                 "assets/images/trolley.png",
