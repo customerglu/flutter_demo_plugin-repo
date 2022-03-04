@@ -2,10 +2,10 @@ import Flutter
 import UIKit
 import CustomerGlu
 
-public class SwiftDemoPlugin: NSObject, FlutterPlugin {
+public class SwiftCgdemopluginPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "demo_plugin", binaryMessenger: registrar.messenger())
-        let instance = SwiftDemoPlugin()
+        let channel = FlutterMethodChannel(name: "cgdemoplugin", binaryMessenger: registrar.messenger())
+        let instance = SwiftCgdemopluginPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     

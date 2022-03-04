@@ -1,8 +1,8 @@
-import 'package:demo_plugin/demo_plugin.dart';
-import 'package:demo_plugin_example/LocalStore.dart';
-import 'package:demo_plugin_example/testScreen.dart';
+import 'package:cgdemoplugin/cgdemoplugin.dart';
+import 'package:cgdemoplugin_example/testScreen.dart';
 import 'package:flutter/material.dart';
 
+import 'LocalStore.dart';
 import 'cartScreen.dart';
 import 'shopScreen.dart';
 
@@ -20,8 +20,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    DemoPlugin.getInstance();
-    DemoPlugin.setDefaultBannerImage(
+    Cgdemoplugin.getInstance();
+    Cgdemoplugin.setDefaultBannerImage(
         "https://assets.customerglu.com/demo/quiz/banner-image/Quiz_1.png");
     registerUser();
   }
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      DemoPlugin.clearGluData();
+                      Cgdemoplugin.clearGluData();
                     }),
               ),
             )
@@ -62,9 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             boxIcon("assets/images/purse.png", "Wallet",
-                () => {DemoPlugin.openWallet()}),
+                () => {Cgdemoplugin.openWallet()}),
             boxIcon("assets/images/quiz.png", "Campaigns",
-                () => {DemoPlugin.loadAllCampaigns()}),
+                () => {Cgdemoplugin.loadAllCampaigns()}),
           ],
         ),
         const SizedBox(height: 30),
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Cart",
                 () => {
                       eventproperties = {"dd": "hh"},
-                      DemoPlugin.sendEventData(
+                      Cgdemoplugin.sendEventData(
                           "completePurchase", eventproperties)
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => CartScreen()))
@@ -99,9 +99,9 @@ class _MyHomePageState extends State<MyHomePage> {
   registerUser() async {
     String fcm = await LocalStore().getAppSharePopUp();
     var profile = {'userId': 'JohnWick2080', 'firebaseToken': fcm};
-    DemoPlugin.isFcmApn("fcm");
-    DemoPlugin.setApnFcmToken("", fcm);
-    bool is_registered = await DemoPlugin.doRegister(profile, true);
+    Cgdemoplugin.isFcmApn("fcm");
+    Cgdemoplugin.setApnFcmToken("", fcm);
+    bool is_registered = await Cgdemoplugin.doRegister(profile, true);
     if (is_registered) {
       print("----------================-------------");
       print("Flutter res - ");

@@ -1,4 +1,4 @@
-# demo_plugin
+# cgdemoplugin
 
 A new Flutter project.
 

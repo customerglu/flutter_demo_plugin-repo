@@ -1,4 +1,4 @@
-group 'com.example.demo_plugin'
+group 'com.customerglu.cgdemoplugin'
 version '1.0'
 
 buildscript {
@@ -6,7 +6,6 @@ buildscript {
         google()
         mavenCentral()
     }
-
 
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
@@ -18,7 +17,6 @@ allprojects {
         maven { url "https://jitpack.io"} //required
     }
 }
-
 rootProject.allprojects {
     repositories {
         google()
@@ -28,9 +26,8 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 
-
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +38,6 @@ android {
         minSdkVersion 21
     }
 }
-
 dependencies {
     implementation 'com.github.customerglu:CG-SDK-Android:v1.0.8'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

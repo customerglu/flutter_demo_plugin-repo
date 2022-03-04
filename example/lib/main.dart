@@ -1,24 +1,24 @@
-import 'package:demo_plugin_example/LocalStore.dart';
-import 'package:demo_plugin_example/SplashScreen.dart';
-import 'package:demo_plugin_example/homeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:demo_plugin/demo_plugin.dart';
+import 'package:cgdemoplugin/cgdemoplugin.dart';
 
-// Future<void> backgroundHandler(RemoteMessage message) async {
-//   print("backgroundHandler(RemoteMessage message)");
-//   await Firebase.initializeApp();
-// }
+import 'LocalStore.dart';
+import 'SplashScreen.dart';
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print("backgroundHandler(RemoteMessage message)");
+  await Firebase.initializeApp();
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//  await Firebase.initializeApp();
+ await Firebase.initializeApp();
 
-  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   // final NotificationAppLaunchDetails? notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -56,41 +56,39 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    //   Firebase.initializeApp();
+      Firebase.initializeApp();
 
-    // FirebaseMessaging.instance.getInitialMessage().then((message) async {
-    //   print("FirebaseMessaging.instance.getInitialMessage().then((message)");
-    //   if (message != null) {
-    //     if (message.data["type"] != null &&
-    //         message.data["type"] == "CustomerGlu") print("initial");
-    //   }
-    // });
+    FirebaseMessaging.instance.getInitialMessage().then((message) async {
+      print("FirebaseMessaging.instance.getInitialMessage().then((message)");
+      if (message != null) {
+        if (message.data["type"] != null &&
+            message.data["type"] == "CustomerGlu") print("initial");
+      }
+    });
 
-    // var messaging = FirebaseMessaging.instance;
+    var messaging = FirebaseMessaging.instance;
 
-    // messaging.getToken().then((value) {
-    //   print("fcm token" + value.toString());
-    //   fcmtoken = value!;
-    //   DemoPlugin.setApnFcmToken("", fcmtoken);
-    //   LocalStore().setAppSharePopUp(fcmtoken);
+    messaging.getToken().then((value) {
+      print("fcm token" + value.toString());
+      fcmtoken = value!;
+      Cgdemoplugin.setApnFcmToken("", fcmtoken);
+      LocalStore().setAppSharePopUp(fcmtoken);
 
-    //   // var profile = {'': ''};
+      // var profile = {'': ''};
 
-    //   // DemoPlugin.updateProfile(profile);
-    //   //Firebase Token
-    // });
+      // DemoPlugin.updateProfile(profile);
+      //Firebase Token
+    });
 
-    //  initializelocalNotification();
+    FirebaseMessaging.onMessage.listen((message) {
+      print("FirebaseMessaging.onMessage.listen");
+      Cgdemoplugin.displayCustomerGluNotification(message.data);
+    });
 
-    // FirebaseMessaging.onMessage.listen((message) {
-    //   print("FirebaseMessaging.onMessage.listen");
-    //   DemoPlugin.displayCustomerGluNotification(message.data);
-    // });
-
-    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    //   print("FirebaseMessaging.onMessageOpenedApp.listen");
-    //   DemoPlugin.displayBackgroundNotification(message.data);
-    // });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print("FirebaseMessaging.onMessageOpenedApp.listen");
+      Cgdemoplugin.displayBackgroundNotification(message.data);
+    });
 
     broadcast_channel.setMethodCallHandler((call) async {
       switch (call.method) {
@@ -105,8 +103,8 @@ class _MyAppState extends State<MyApp> {
           break;
       }
     });
-    DemoPlugin.enableAnalyticsEvent(true);
-    DemoPlugin.configureLoaderColour("#0B66EA");
+    Cgdemoplugin.enableAnalyticsEvent(true);
+    Cgdemoplugin.configureLoaderColour("#0B66EA");
   }
 
   static const EventChannel _eventChannel = EventChannel("CustomerGlu");

@@ -1,4 +1,4 @@
-package com.example.demo_plugin;
+package com.customerglu.cgdemoplugin;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -43,7 +43,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 
 /** DemoPlugin */
-public class DemoPlugin implements FlutterPlugin, MethodCallHandler{
+public class CgdemopluginPlugin implements FlutterPlugin, MethodCallHandler{
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -57,7 +57,7 @@ public class DemoPlugin implements FlutterPlugin, MethodCallHandler{
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "demo_plugin");
+    channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "cgdemoplugin");
     channel.setMethodCallHandler(this);
     this.context = flutterPluginBinding.getApplicationContext();
    // listen_broadcast();

@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:demo_plugin/demo_plugin.dart';
+import 'package:cgdemoplugin/cgdemoplugin.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('demo_plugin');
+  const MethodChannel channel = MethodChannel('cgdemoplugin');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await DemoPlugin.platformVersion, '42');
+    expect(await Cgdemoplugin.platformVersion, '42');
   });
 }

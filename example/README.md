@@ -1,6 +1,6 @@
-# demo_plugin_example
+# cgdemoplugin_example
 
-Demonstrates how to use the demo_plugin plugin.
+Demonstrates how to use the cgdemoplugin plugin.
 
 ## Getting Started
 

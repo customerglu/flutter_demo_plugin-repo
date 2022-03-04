@@ -3,14 +3,10 @@ import Flutter
 import Firebase
 import CustomerGlu
 
-
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
-    
     let channelName = "CUSTOMERGLU_EVENTS"
     var methodChannel = FlutterMethodChannel()
-    
-   // let channelName = "wingquest.stablekernel.io/speech"
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?

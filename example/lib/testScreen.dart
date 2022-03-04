@@ -1,7 +1,7 @@
-import 'package:demo_plugin/demo_plugin.dart';
-import 'package:demo_plugin_example/LocalStore.dart';
+import 'package:cgdemoplugin/cgdemoplugin.dart';
 import 'package:flutter/material.dart';
 
+import 'LocalStore.dart';
 import 'cartScreen.dart';
 import 'shopScreen.dart';
 
@@ -62,22 +62,22 @@ class _MyHomePageState extends State<TestScreen> {
                   "LoadCampaign Filter",
                   () => {
                         filter = {"type": "giftbox"},
-                        DemoPlugin.loadCampaignsByFilter(filter)
+                        Cgdemoplugin.loadCampaignsByFilter(filter)
                       }),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              boxIcon("Wallet", () => {DemoPlugin.openWallet()}),
-              boxIcon("Campaigns", () => {DemoPlugin.loadAllCampaigns()}),
+              boxIcon("Wallet", () => {Cgdemoplugin.openWallet()}),
+              boxIcon("Campaigns", () => {Cgdemoplugin.loadAllCampaigns()}),
             ],
           ),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             boxIcon(
                 "Campaign By Id",
                 () => {
-                      DemoPlugin.loadCampaignById(
+                      Cgdemoplugin.loadCampaignById(
                           "0c114806-aeca-4e42-a475-10759b8a303e")
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => ShopScreen()))
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<TestScreen> {
                 "Send Events",
                 () => {
                       eventproperties = {"dd": "hh"},
-                      DemoPlugin.sendEventData(
+                      Cgdemoplugin.sendEventData(
                           "completePurchase", eventproperties)
                       // Navigator.of(context).push(
                       //     MaterialPageRoute(builder: (context) => CartScreen()))
@@ -96,33 +96,33 @@ class _MyHomePageState extends State<TestScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               boxIcon("setBannerImage",
-                  () => {DemoPlugin.setDefaultBannerImage("")}),
+                  () => {Cgdemoplugin.setDefaultBannerImage("")}),
               boxIcon("LoaderColour",
-                  () => {DemoPlugin.configureLoaderColour("#F089b2")}),
+                  () => {Cgdemoplugin.configureLoaderColour("#F089b2")}),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               boxIcon("closeWebview",
-                  () => {DemoPlugin.closeWebviewOnDeeplinkEvent(true)}),
-              boxIcon("disableGluSdk", () => {DemoPlugin.disableGluSdk(true)}),
+                  () => {Cgdemoplugin.closeWebviewOnDeeplinkEvent(true)}),
+              boxIcon("disableGluSdk", () => {Cgdemoplugin.disableGluSdk(true)}),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               boxIcon(
-                  "enablePrecaching", () => {DemoPlugin.enablePrecaching()}),
+                  "enablePrecaching", () => {Cgdemoplugin.enablePrecaching()}),
               boxIcon(
-                  "getReferralId", () => {DemoPlugin.getReferralId("true")}),
+                  "getReferralId", () => {Cgdemoplugin.getReferralId("true")}),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               boxIcon("enableAnalyticsEvent",
-                  () => {DemoPlugin.enableAnalyticsEvent(true)}),
+                  () => {Cgdemoplugin.enableAnalyticsEvent(true)}),
               boxIcon("updateProfile", () => {updateProfile()}),
             ],
           ),
@@ -132,7 +132,7 @@ class _MyHomePageState extends State<TestScreen> {
               boxIcon(
                   "Safe Area",
                   () => {
-                        DemoPlugin.configureSafeArea(
+                        Cgdemoplugin.configureSafeArea(
                             50, 30, "#FF0Ebc", "#FF0ENJ")
                       }),
             ],
@@ -145,10 +145,10 @@ class _MyHomePageState extends State<TestScreen> {
 
 registerUser() async {
   String fcm = await LocalStore().getAppSharePopUp();
-  var profile = {'userId': 'JohnWick2087', 'firebaseToken': fcm};
-  DemoPlugin.isFcmApn("fcm");
-  DemoPlugin.setApnFcmToken("", fcm);
-  bool is_registered = await DemoPlugin.doRegister(profile, true);
+  var profile = {'userId': 'JohnWickios2087', 'firebaseToken': fcm};
+  Cgdemoplugin.isFcmApn("fcm");
+  Cgdemoplugin.setApnFcmToken("", fcm);
+  bool is_registered = await Cgdemoplugin.doRegister(profile, true);
   if (is_registered) {
     print("----------================-------------");
     print("Flutter res - ");
@@ -157,10 +157,10 @@ registerUser() async {
 
 updateProfile() async {
   String fcm = await LocalStore().getAppSharePopUp();
-  var profile = {'userId': 'JohnWick2080', 'firebaseToken': fcm};
-  DemoPlugin.isFcmApn("fcm");
-  DemoPlugin.setApnFcmToken("", fcm);
-  await DemoPlugin.updateProfile(profile);
+  var profile = {'userId': 'JohnWickios2087', 'firebaseToken': fcm};
+  Cgdemoplugin.isFcmApn("fcm");
+  Cgdemoplugin.setApnFcmToken("", fcm);
+  await Cgdemoplugin.updateProfile(profile);
 }
 
 Widget boxIcon(label, callback) {

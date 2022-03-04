@@ -1,14 +1,14 @@
 PODS:
-  - CustomerGlu (1.0.6)
-  - demo_plugin (0.0.1):
+  - cgdemoplugin (0.0.1):
     - CustomerGlu (= 1.0.6)
     - Flutter
+  - CustomerGlu (1.0.6)
   - Firebase/CoreOnly (8.11.0):
     - FirebaseCore (= 8.11.0)
   - Firebase/Messaging (8.11.0):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.11.0)
-  - firebase_core (1.12.0):
+  - firebase_core (1.13.1):
     - Firebase/CoreOnly (= 8.11.0)
     - Flutter
   - firebase_messaging (10.0.9):
@@ -70,7 +70,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - demo_plugin (from `.symlinks/plugins/demo_plugin/ios`)
+  - cgdemoplugin (from `.symlinks/plugins/cgdemoplugin/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
@@ -90,8 +90,8 @@ SPEC REPOS:
     - PromisesObjC
 
 EXTERNAL SOURCES:
-  demo_plugin:
-    :path: ".symlinks/plugins/demo_plugin/ios"
+  cgdemoplugin:
+    :path: ".symlinks/plugins/cgdemoplugin/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
@@ -102,10 +102,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
+  cgdemoplugin: 0b089aeeb91300daadbc564d3fac40da4d323b33
   CustomerGlu: c950f9d43d398eba29dd90534bdff232f0283828
-  demo_plugin: 8e58bc99ae93db629725f3fd54ba76f3f73ad30e
   Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
-  firebase_core: 443bccfd6aa6b42f07be365b500773dc69db2d87
+  firebase_core: 08f6a85f62060111de5e98d6a214810d11365de9
   firebase_messaging: c6608162e71bcfd78198a81eac9c2fa27fed3aae
   FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
   FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
@@ -120,4 +120,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.1
