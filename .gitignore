@@ -1,17 +1,9 @@
 # Miscellaneous
-.DS_Store
-.dart_tool/package_config.json
-.dart_tool/package_config_subset
-.dart_tool/version
-.idea/.gitignore
-.idea/misc.xml
-.packages
 pubspec.lock
 *.class
 *.log
 *.pyc
 *.swp
-.DS_Store
 .atom/
 .buildlog/
 .history
@@ -21,7 +13,7 @@ pubspec.lock
 *.iml
 *.ipr
 *.iws
-.idea/
+
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -32,6 +24,4 @@ pubspec.lock
 # Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
 /pubspec.lock
 **/doc/api/
-.dart_tool/
-.packages
 build/
