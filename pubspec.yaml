@@ -1,7 +1,7 @@
 name: cgdemoplugin
 description: A new Flutter project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/customerglu/flutter_demo_plugin-repo
 
 environment:
   sdk: ">=2.16.1 <3.0.0"
