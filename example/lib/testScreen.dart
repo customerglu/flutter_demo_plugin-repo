@@ -106,7 +106,8 @@ class _MyHomePageState extends State<TestScreen> {
             children: [
               boxIcon("closeWebview",
                   () => {Cgdemoplugin.closeWebviewOnDeeplinkEvent(true)}),
-              boxIcon("disableGluSdk", () => {Cgdemoplugin.disableGluSdk(true)}),
+              boxIcon(
+                  "disableGluSdk", () => {Cgdemoplugin.disableGluSdk(true)}),
             ],
           ),
           Row(
@@ -145,7 +146,7 @@ class _MyHomePageState extends State<TestScreen> {
 
 registerUser() async {
   String fcm = await LocalStore().getAppSharePopUp();
-  var profile = {'userId': 'JohnWickios2087', 'firebaseToken': fcm};
+  var profile = {'userId': 'JohnWickios20899', 'firebaseToken': fcm};
   Cgdemoplugin.isFcmApn("fcm");
   Cgdemoplugin.setApnFcmToken("", fcm);
   bool is_registered = await Cgdemoplugin.doRegister(profile, true);

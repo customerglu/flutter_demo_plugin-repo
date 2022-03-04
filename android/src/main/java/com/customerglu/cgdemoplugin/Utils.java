@@ -1,4 +1,4 @@
-package com.example.demo_plugin;
+package com.customerglu.cgdemoplugin;
 
 import android.util.Log;
 
