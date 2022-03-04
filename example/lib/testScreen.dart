@@ -145,7 +145,7 @@ class _MyHomePageState extends State<TestScreen> {
 
 registerUser() async {
   String fcm = await LocalStore().getAppSharePopUp();
-  var profile = {'userId': 'JohnWick2080', 'firebaseToken': fcm};
+  var profile = {'userId': 'JohnWick2087', 'firebaseToken': fcm};
   DemoPlugin.isFcmApn("fcm");
   DemoPlugin.setApnFcmToken("", fcm);
   bool is_registered = await DemoPlugin.doRegister(profile, true);

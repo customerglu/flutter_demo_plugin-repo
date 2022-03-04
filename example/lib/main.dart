@@ -9,16 +9,16 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:demo_plugin/demo_plugin.dart';
 
-Future<void> backgroundHandler(RemoteMessage message) async {
-  print("backgroundHandler(RemoteMessage message)");
-  await Firebase.initializeApp();
-}
+// Future<void> backgroundHandler(RemoteMessage message) async {
+//   print("backgroundHandler(RemoteMessage message)");
+//   await Firebase.initializeApp();
+// }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+//  await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(backgroundHandler);
   // final NotificationAppLaunchDetails? notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   // if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -56,41 +56,41 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Firebase.initializeApp();
+    //   Firebase.initializeApp();
 
-    FirebaseMessaging.instance.getInitialMessage().then((message) async {
-      print("FirebaseMessaging.instance.getInitialMessage().then((message)");
-      if (message != null) {
-        if (message.data["type"] != null &&
-            message.data["type"] == "CustomerGlu") print("initial");
-      }
-    });
+    // FirebaseMessaging.instance.getInitialMessage().then((message) async {
+    //   print("FirebaseMessaging.instance.getInitialMessage().then((message)");
+    //   if (message != null) {
+    //     if (message.data["type"] != null &&
+    //         message.data["type"] == "CustomerGlu") print("initial");
+    //   }
+    // });
 
-    var messaging = FirebaseMessaging.instance;
+    // var messaging = FirebaseMessaging.instance;
 
-    messaging.getToken().then((value) {
-      print("fcm token" + value.toString());
-      fcmtoken = value!;
-      DemoPlugin.setApnFcmToken("", fcmtoken);
-      LocalStore().setAppSharePopUp(fcmtoken);
+    // messaging.getToken().then((value) {
+    //   print("fcm token" + value.toString());
+    //   fcmtoken = value!;
+    //   DemoPlugin.setApnFcmToken("", fcmtoken);
+    //   LocalStore().setAppSharePopUp(fcmtoken);
 
-      // var profile = {'': ''};
+    //   // var profile = {'': ''};
 
-      // DemoPlugin.updateProfile(profile);
-      //Firebase Token
-    });
+    //   // DemoPlugin.updateProfile(profile);
+    //   //Firebase Token
+    // });
 
     //  initializelocalNotification();
 
-    FirebaseMessaging.onMessage.listen((message) {
-      print("FirebaseMessaging.onMessage.listen");
-      DemoPlugin.displayCustomerGluNotification(message.data);
-    });
+    // FirebaseMessaging.onMessage.listen((message) {
+    //   print("FirebaseMessaging.onMessage.listen");
+    //   DemoPlugin.displayCustomerGluNotification(message.data);
+    // });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      print("FirebaseMessaging.onMessageOpenedApp.listen");
-      DemoPlugin.displayBackgroundNotification(message.data);
-    });
+    // FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    //   print("FirebaseMessaging.onMessageOpenedApp.listen");
+    //   DemoPlugin.displayBackgroundNotification(message.data);
+    // });
 
     broadcast_channel.setMethodCallHandler((call) async {
       switch (call.method) {
